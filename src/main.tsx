@@ -4,26 +4,22 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import {
-  RouteObject,
-  RouterProvider,
   createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
 } from "react-router-dom";
 import Test from "./Test.tsx";
 
 const RootLayout = React.lazy(() => import("./layouts/RootLayout.tsx"));
 
-const routes: RouteObject[] = [
-  {
-    path: "/",
-    element: <RootLayout />,
-  },
-  {
-    path: "/test",
-    element: <Test />,
-  },
-];
-
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route path="/test" element={<Test />} />
+    </Route>
+  )
+);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
