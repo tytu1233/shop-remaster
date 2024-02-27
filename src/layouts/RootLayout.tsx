@@ -23,6 +23,7 @@ const RootLayout = () => {
           <Navigation>
             <NavLink to="/">Home</NavLink>
             <NavLink to="/test">Test</NavLink>
+            <NavLink to="/app">App</NavLink>
           </Navigation>
         </NavigationContainer>
       </Header>

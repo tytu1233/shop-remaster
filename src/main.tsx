@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Test from "./Test.tsx";
+import App from "./App.tsx";
 
 const RootLayout = React.lazy(() => import("./layouts/RootLayout.tsx"));
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       <Route path="/test" element={<Test />} />
+      <Route path="/app" element={<App />} />
     </Route>
   )
 );

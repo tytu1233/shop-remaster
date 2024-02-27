@@ -1,3 +1,4 @@
 export type UserAuthType = {
-  token: string;
+  accessToken: string;
+  refreshToken: string;
 };

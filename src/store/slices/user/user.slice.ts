@@ -1,32 +1,30 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { UserAuthType } from "./type/auth.type";
-import { authenticateUser } from "./thunks/user.thunks";
+import type { RootState } from "../../types/store";
+import { AuthResponse } from "../../api/authentication/authApiSlice";
 
 const initialState: UserAuthType = {
-  token: "",
+  accessToken: "",
+  refreshToken: "",
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+    setToken: (state, action: PayloadAction<AuthResponse>) => {
+      const { accessJwtToken, refreshJwtToken } = action.payload;
+      state.accessToken = accessJwtToken;
+      state.refreshToken = refreshJwtToken;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(
-      authenticateUser.fulfilled,
-      (state, action: PayloadAction<string>) => {
-        console.log(action.payload);
-        const response = action.payload;
-        console.log(response.token);
-        state.token = response.token;
-      }
-    );
+    signOut: (state) => {
+      state.accessToken = "";
+    },
   },
 });
 
-export const { setToken } = userSlice.actions;
+export const { setToken, signOut } = userSlice.actions;
+export const selectAccessToken = (state: RootState) => state.user.accessToken;
+export const selectRefreshToken = (state: RootState) => state.user.refreshToken;
 
 export default userSlice;

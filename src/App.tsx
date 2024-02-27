@@ -1,35 +1,47 @@
 import { ConnectedProps, connect } from "react-redux";
-import { StoreStateType } from "./store/types/store";
-import { authenticateUser } from "./store/slices/user/thunks/user.thunks";
+import { RootState } from "./store/types/store";
+import {
+  selectAccessToken,
+  setToken,
+  signOut,
+} from "./store/slices/user/user.slice";
+import { useSignInMutation } from "./store/api/authentication/authApiSlice";
 
 type PropsType = object & ConnectorProps;
 
 const App = (props: PropsType) => {
+  const [signIn, { isError, isLoading: elo, isSuccess }] = useSignInMutation();
+
   const a = async () => {
-    const call = await fetch("http://localhost:8080/api/v1/demo", {
-      headers: {
-        Authorization: `Bearer ${props.getToken}`,
-      },
-    });
-    console.log(JSON.stringify(call.body));
+    const user = {
+      email: "tytu@gmail.com",
+      password: "Komputer12.",
+    };
+
+    const authenticationData = await signIn(user).unwrap();
+    console.log(authenticationData);
+    props.setToken(authenticationData);
   };
 
   return (
     <>
       <div>
+        <p>Success: {isSuccess}</p>
+        <p>Error: {isError}</p>
+        <p>isLoading: {elo}</p>
         <p>name: {props.getToken}</p>
-        <button onClick={() => props.authenticateUser()}>Change name</button>
-        <button onClick={a}>Call secured</button>
+        <button onClick={a}>Call authentication</button>
       </div>
     </>
   );
 };
-const mapStateToProps = (state: StoreStateType) => ({
-  getToken: state.auth.token,
+const mapStateToProps = (state: RootState) => ({
+  getToken: selectAccessToken(state),
 });
 
 const mapDispatchToProps = {
-  authenticateUser,
+  setToken,
+  signOut,
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
