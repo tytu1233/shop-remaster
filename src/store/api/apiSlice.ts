@@ -11,6 +11,7 @@ import {
   selectAccessToken,
   selectRefreshToken,
   setToken,
+  resetAccessToken,
   signOut,
 } from "../slices/user/user.slice";
 import { AuthResponse } from "./authentication/authApiSlice";
@@ -37,14 +38,12 @@ const baseQueryWithReAuth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   await mutex.waitForUnlock();
-  console.log("ide");
   let result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 403) {
     if (!mutex.isLocked()) {
-        console.log('jestem')
       const release = await mutex.acquire();
       try {
-        api.dispatch(signOut());
+        api.dispatch(resetAccessToken());
         const refreshToken = selectRefreshToken(api.getState() as RootState);
         const refreshResult = await baseQuery(
           {
@@ -68,7 +67,6 @@ const baseQueryWithReAuth: BaseQueryFn<
       }
     } else {
       await mutex.waitForUnlock();
-      console.log("wchodze tu");
       result = await baseQuery(args, api, extraOptions);
     }
   }

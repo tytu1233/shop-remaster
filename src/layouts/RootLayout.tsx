@@ -7,7 +7,8 @@ import {
   LogoName,
   Navigation,
   SearchBox,
-} from "./components/RootLayoutComponents";
+} from "./style/RootLayoutStyle";
+import SearchContainer from "../pages/search/SearchContainer";
 
 const RootLayout = () => {
   return (
@@ -18,7 +19,7 @@ const RootLayout = () => {
             <LogoName>Clothing-store</LogoName>
           </Logo>
           <SearchBox>
-            <input type="text" />
+            <SearchContainer />
           </SearchBox>
           <Navigation>
             <NavLink to="/">Home</NavLink>

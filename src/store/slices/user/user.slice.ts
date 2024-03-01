@@ -17,13 +17,18 @@ const userSlice = createSlice({
       state.accessToken = accessJwtToken;
       state.refreshToken = refreshJwtToken;
     },
+    resetAccessToken: (state) => {
+      state.accessToken = "";
+    },
     signOut: (state) => {
       state.accessToken = "";
+      state.refreshToken = "";
     },
   },
 });
 
-export const { setToken, signOut } = userSlice.actions;
+export const { setToken, signOut, resetAccessToken } = userSlice.actions;
+
 export const selectAccessToken = (state: RootState) => state.user.accessToken;
 export const selectRefreshToken = (state: RootState) => state.user.refreshToken;
 

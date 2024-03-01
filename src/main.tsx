@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { Provider } from "react-redux";
@@ -9,15 +9,15 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Test from "./Test.tsx";
 import App from "./App.tsx";
+import MainContainer from "./pages/main/MainContainer.tsx";
 
-const RootLayout = React.lazy(() => import("./layouts/RootLayout.tsx"));
+const RootLayout = lazy(() => import("./layouts/RootLayout.tsx"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      <Route path="/test" element={<Test />} />
+      <Route index element={<MainContainer />} />
       <Route path="/app" element={<App />} />
     </Route>
   )
