@@ -10,6 +10,13 @@ type UserRequest = {
   password: string;
 };
 
+type IUser = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     signIn: builder.mutation({
@@ -21,10 +28,18 @@ export const authApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response: AuthResponse) => response,
       invalidatesTags: ["auth"],
     }),
+    registerUser: builder.mutation<null, IUser>({
+      query: ({ ...patch }) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: patch,
+      }),
+    }),
     test: builder.query({
-      query: () => "/demo",
+      query: () => "/test",
     }),
   }),
 });
 
-export const { useSignInMutation, useTestQuery } = authApiSlice;
+export const { useSignInMutation, useRegisterUserMutation, useTestQuery } =
+  authApiSlice;

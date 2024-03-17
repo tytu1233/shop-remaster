@@ -6,7 +6,7 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
-import type { RootState } from "../types/store";
+import type { RootState } from "../types/store.type";
 import {
   selectAccessToken,
   selectRefreshToken,
@@ -77,6 +77,6 @@ const baseQueryWithReAuth: BaseQueryFn<
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithReAuth,
-  tagTypes: ["auth"],
+  tagTypes: ["auth", "products"],
   endpoints: () => ({}),
 });

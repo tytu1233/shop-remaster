@@ -9,6 +9,7 @@ import {
   SearchBox,
 } from "./style/RootLayoutStyle";
 import SearchContainer from "../pages/search/SearchContainer";
+import { ToastContainer } from "react-toastify";
 
 const RootLayout = () => {
   return (
@@ -23,8 +24,9 @@ const RootLayout = () => {
           </SearchBox>
           <Navigation>
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/test">Test</NavLink>
+            <NavLink to="/cart">Cart</NavLink>
             <NavLink to="/app">App</NavLink>
+            <NavLink to="/register">Register</NavLink>
           </Navigation>
         </NavigationContainer>
       </Header>
@@ -32,6 +34,7 @@ const RootLayout = () => {
         <Outlet />
       </main>
       <div>footer</div>
+      <ToastContainer autoClose={3000} newestOnTop position="bottom-right" />
     </Container>
   );
 };
